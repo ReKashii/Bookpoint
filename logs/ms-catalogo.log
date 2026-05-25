@@ -1,0 +1,183 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-05-25T03:34:50.786-04:00  INFO 9920 --- [ms-catalogo] [           main] c.b.catalogo.CatalogoApplication         : Starting CatalogoApplication v0.0.1-SNAPSHOT using Java 17.0.19 with PID 9920 (C:\Users\mati_\Desktop\Proyectos fs1\Bookpoint\ms-catalogo\target\catalogo-0.0.1-SNAPSHOT.jar started by mati_ in C:\Users\mati_\Desktop\Proyectos fs1\BookPoint\ms-ventas)
+2026-05-25T03:34:50.791-04:00  INFO 9920 --- [ms-catalogo] [           main] c.b.catalogo.CatalogoApplication         : No active profile set, falling back to 1 default profile: "default"
+2026-05-25T03:34:51.478-04:00  INFO 9920 --- [ms-catalogo] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-05-25T03:34:51.527-04:00  INFO 9920 --- [ms-catalogo] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 42 ms. Found 2 JPA repository interfaces.
+2026-05-25T03:34:51.979-04:00  INFO 9920 --- [ms-catalogo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8084 (http)
+2026-05-25T03:34:51.987-04:00  INFO 9920 --- [ms-catalogo] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-05-25T03:34:51.988-04:00  INFO 9920 --- [ms-catalogo] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.20]
+2026-05-25T03:34:52.028-04:00  INFO 9920 --- [ms-catalogo] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-05-25T03:34:52.029-04:00  INFO 9920 --- [ms-catalogo] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1158 ms
+2026-05-25T03:34:52.275-04:00  INFO 9920 --- [ms-catalogo] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-05-25T03:34:52.372-04:00  INFO 9920 --- [ms-catalogo] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-05-25T03:34:52.439-04:00  INFO 9920 --- [ms-catalogo] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-05-25T03:34:52.653-04:00  INFO 9920 --- [ms-catalogo] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-05-25T03:34:52.683-04:00  INFO 9920 --- [ms-catalogo] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-05-25T03:34:52.833-04:00  INFO 9920 --- [ms-catalogo] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@401788d5
+2026-05-25T03:34:52.835-04:00  INFO 9920 --- [ms-catalogo] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-05-25T03:34:52.873-04:00  WARN 9920 --- [ms-catalogo] [           main] org.hibernate.dialect.Dialect            : HHH000511: The 5.5.0 version for [org.hibernate.dialect.MySQLDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 8.0.0. Check the community dialects project for available legacy versions.
+2026-05-25T03:34:53.529-04:00  INFO 9920 --- [ms-catalogo] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    create table productos (
+        id bigint not null auto_increment,
+        autor varchar(100) not null,
+        categoria varchar(50) not null,
+        descripcion varchar(1000),
+        editorial varchar(100) not null,
+        precio decimal(12,2) not null,
+        titulo varchar(150) not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    create table resenas (
+        id bigint not null auto_increment,
+        calificacion integer not null,
+        comentario varchar(500) not null,
+        usuario_id bigint not null,
+        usuario_nombre varchar(100) not null,
+        producto_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+Hibernate: 
+    alter table resenas 
+       add constraint FKey60d288h91q40q8qiagc871p 
+       foreign key (producto_id) 
+       references productos (id)
+2026-05-25T03:34:53.584-04:00  INFO 9920 --- [ms-catalogo] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-05-25T03:34:53.796-04:00  INFO 9920 --- [ms-catalogo] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-05-25T03:34:54.356-04:00  WARN 9920 --- [ms-catalogo] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-05-25T03:34:54.702-04:00  INFO 9920 --- [ms-catalogo] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8084 (http) with context path ''
+2026-05-25T03:34:54.716-04:00  INFO 9920 --- [ms-catalogo] [           main] c.b.catalogo.CatalogoApplication         : Started CatalogoApplication in 4.275 seconds (process running for 4.661)
+Hibernate: 
+    select
+        count(*) 
+    from
+        productos p1_0
+2026-05-25T03:34:54.807-04:00  INFO 9920 --- [ms-catalogo] [           main] c.b.catalogo.config.DataInitializer      : Inicializando catálogo base en ms-catalogo...
+Hibernate: 
+    insert 
+    into
+        productos
+        (autor, categoria, descripcion, editorial, precio, titulo) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        productos
+        (autor, categoria, descripcion, editorial, precio, titulo) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        productos
+        (autor, categoria, descripcion, editorial, precio, titulo) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        productos
+        (autor, categoria, descripcion, editorial, precio, titulo) 
+    values
+        (?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        productos
+        (autor, categoria, descripcion, editorial, precio, titulo) 
+    values
+        (?, ?, ?, ?, ?, ?)
+2026-05-25T03:34:54.859-04:00  INFO 9920 --- [ms-catalogo] [           main] c.b.catalogo.config.DataInitializer      : Catálogo base registrado con éxito.
+Hibernate: 
+    insert 
+    into
+        resenas
+        (calificacion, comentario, producto_id, usuario_id, usuario_nombre) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        resenas
+        (calificacion, comentario, producto_id, usuario_id, usuario_nombre) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        resenas
+        (calificacion, comentario, producto_id, usuario_id, usuario_nombre) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        resenas
+        (calificacion, comentario, producto_id, usuario_id, usuario_nombre) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        resenas
+        (calificacion, comentario, producto_id, usuario_id, usuario_nombre) 
+    values
+        (?, ?, ?, ?, ?)
+2026-05-25T03:34:54.866-04:00  INFO 9920 --- [ms-catalogo] [           main] c.b.catalogo.config.DataInitializer      : Reseñas base asociadas con éxito. Promedios iniciales recalculados de forma dinámica.
+2026-05-25T03:36:15.737-04:00  INFO 9920 --- [ms-catalogo] [nio-8084-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-05-25T03:36:15.737-04:00  INFO 9920 --- [ms-catalogo] [nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-05-25T03:36:15.737-04:00  INFO 9920 --- [ms-catalogo] [nio-8084-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-05-25T03:36:15.761-04:00  INFO 9920 --- [ms-catalogo] [nio-8084-exec-1] c.b.c.service.CatalogoServiceImpl        : Buscando productos con filtros. Autor: null, Editorial: null, Categoría: null, Rango Precios: [null - null], Pág: 0, Cantidad: 10
+2026-05-25T03:36:15.769-04:00  WARN 9920 --- [ms-catalogo] [nio-8084-exec-1] org.hibernate.orm.query                  : HHH90003004: firstResult/maxResults specified with collection fetch; applying in memory
+Hibernate: 
+    select
+        distinct p1_0.id,
+        p1_0.autor,
+        p1_0.categoria,
+        p1_0.descripcion,
+        p1_0.editorial,
+        p1_0.precio,
+        r1_0.producto_id,
+        r1_0.id,
+        r1_0.calificacion,
+        r1_0.comentario,
+        r1_0.usuario_id,
+        r1_0.usuario_nombre,
+        p1_0.titulo 
+    from
+        productos p1_0 
+    left join
+        resenas r1_0 
+            on p1_0.id=r1_0.producto_id 
+    where
+        (
+            ? is null 
+            or lower(p1_0.autor) like replace(lower(concat('%', ?, '%')), '\\', '\\\\')
+        ) 
+        and (
+            ? is null 
+            or lower(p1_0.editorial) like replace(lower(concat('%', ?, '%')), '\\', '\\\\')
+        ) 
+        and (
+            ? is null 
+            or lower(p1_0.categoria)=lower(?)
+        ) 
+        and (
+            ? is null 
+            or p1_0.precio>=?
+        ) 
+        and (
+            ? is null 
+            or p1_0.precio<=?
+        )
+2026-05-25T03:36:15.794-04:00  INFO 9920 --- [ms-catalogo] [nio-8084-exec-1] c.b.c.service.CatalogoServiceImpl        : Búsqueda completada. Total de productos encontrados: 5

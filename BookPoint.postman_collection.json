@@ -1,0 +1,588 @@
+{
+  "info": {
+    "name": "BookPoint - Colección Completa",
+    "_postman_id": "bookpoint-collection-v1",
+    "description": "Colección completa de los 10 microservicios de BookPoint. Puertos: ms-ventas(8081), ms-inventario(8082), ms-usuarios(8083), ms-catalogo(8084), ms-logistica(8085), ms-proveedores(8086), ms-promociones(8087), ms-facturacion(8088), ms-bodega(8089), ms-sucursales(8090).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "ms-ventas (8081)",
+      "item": [
+        {
+          "name": "Registrar Venta",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/ventas", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "ventas"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoVenta\": \"PRESENCIAL\",\n  \"clienteNombre\": \"Juan Pérez\",\n  \"clienteRut\": \"12345678-9\",\n  \"asistenteNombre\": \"María López\",\n  \"codigoDescuento\": null,\n  \"detalles\": [\n    {\n      \"productoId\": 101,\n      \"productoNombre\": \"El Principito\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 12990.00\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Registrar Venta ONLINE con descuento",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/ventas", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "ventas"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoVenta\": \"ONLINE\",\n  \"clienteNombre\": \"Ana González\",\n  \"clienteRut\": \"98765432-1\",\n  \"asistenteNombre\": null,\n  \"codigoDescuento\": \"PROMO20\",\n  \"detalles\": [\n    {\n      \"productoId\": 102,\n      \"productoNombre\": \"Cien años de soledad\",\n      \"cantidad\": 2,\n      \"precioUnitario\": 18990.00\n    },\n    {\n      \"productoId\": 103,\n      \"productoNombre\": \"Cuaderno universitario\",\n      \"cantidad\": 3,\n      \"precioUnitario\": 2490.00\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Obtener Venta por Folio",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/ventas/FOLIO-001", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "ventas", "FOLIO-001"] }
+          }
+        },
+        {
+          "name": "Listar Todas las Ventas",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8081/api/ventas", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "ventas"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-inventario (8082)",
+      "item": [
+        {
+          "name": "Ver Stock por Sucursal y Producto",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8082/api/inventario/1/producto/101", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "inventario", "1", "producto", "101"] }
+          }
+        },
+        {
+          "name": "Verificar Stock Disponible (usado por ms-ventas)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8082/api/inventario/check-stock?productoId=101&cantidad=1",
+              "protocol": "http", "host": ["localhost"], "port": "8082",
+              "path": ["api", "inventario", "check-stock"],
+              "query": [
+                { "key": "productoId", "value": "101" },
+                { "key": "cantidad", "value": "1" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar Stock por Sucursal",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8082/api/inventario/sucursal/1", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "inventario", "sucursal", "1"] }
+          }
+        },
+        {
+          "name": "Ver Alertas de Reposición",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8082/api/inventario/alertas", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "inventario", "alertas"] }
+          }
+        },
+        {
+          "name": "Ajuste de Stock",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8082/api/inventario/ajuste", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "inventario", "ajuste"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productoId\": 101,\n  \"sucursalId\": 1,\n  \"cantidadAjuste\": 10,\n  \"motivo\": \"Recepción de mercadería por inventario físico\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Traslado de Stock entre Sucursales",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8082/api/inventario/traslado", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "inventario", "traslado"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productoId\": 101,\n  \"sucursalOrigenId\": 1,\n  \"sucursalDestinoId\": 2,\n  \"cantidad\": 5\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-usuarios (8083)",
+      "item": [
+        {
+          "name": "Registrar Usuario",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8083/api/usuarios/registro", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "usuarios", "registro"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rut\": \"11111111-1\",\n  \"nombre\": \"Carlos Fernández\",\n  \"email\": \"carlos@email.com\",\n  \"password\": \"password123\",\n  \"rolId\": 4\n}"
+            }
+          }
+        },
+        {
+          "name": "Registrar Usuario (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8083/api/usuarios/registro", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "usuarios", "registro"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rut\": \"22222222-2\",\n  \"nombre\": \"Admin BookPoint\",\n  \"email\": \"admin2@bookpoint.cl\",\n  \"password\": \"admin1234\",\n  \"rolId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Obtener Usuario por ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8083/api/usuarios/1", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "usuarios", "1"] }
+          }
+        },
+        {
+          "name": "Actualizar Rol de Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8083/api/usuarios/1/rol", "protocol": "http", "host": ["localhost"], "port": "8083", "path": ["api", "usuarios", "1", "rol"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rolId\": 2\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-catalogo (8084)",
+      "item": [
+        {
+          "name": "Listar Productos (con paginación)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8084/api/catalogo/productos?page=0&size=10",
+              "protocol": "http", "host": ["localhost"], "port": "8084",
+              "path": ["api", "catalogo", "productos"],
+              "query": [
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar Productos por Filtros",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8084/api/catalogo/productos?autor=García Márquez&categoria=Literatura&precioMin=5000&precioMax=30000&page=0&size=5",
+              "protocol": "http", "host": ["localhost"], "port": "8084",
+              "path": ["api", "catalogo", "productos"],
+              "query": [
+                { "key": "autor", "value": "García Márquez" },
+                { "key": "categoria", "value": "Literatura" },
+                { "key": "precioMin", "value": "5000" },
+                { "key": "precioMax", "value": "30000" },
+                { "key": "page", "value": "0" },
+                { "key": "size", "value": "5" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Ver Detalle de Producto",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8084/api/catalogo/productos/1", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "catalogo", "productos", "1"] }
+          }
+        },
+        {
+          "name": "Agregar Producto al Catálogo",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8084/api/catalogo/productos", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "catalogo", "productos"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"La Metamorfosis\",\n  \"autor\": \"Franz Kafka\",\n  \"editorial\": \"Alianza Editorial\",\n  \"precio\": 9990.00,\n  \"categoria\": \"Literatura\",\n  \"descripcion\": \"Novela corta del escritor checo Franz Kafka.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Agregar Reseña a Producto",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8084/api/catalogo/productos/1/resenas", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "catalogo", "productos", "1", "resenas"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"usuarioNombre\": \"Juan Pérez\",\n  \"calificacion\": 5,\n  \"comentario\": \"Excelente libro, muy recomendado para todo tipo de lector.\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-logistica (8085)",
+      "item": [
+        {
+          "name": "Crear Envío",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8085/api/logistica/envios", "protocol": "http", "host": ["localhost"], "port": "8085", "path": ["api", "logistica", "envios"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ventaId\": 1,\n  \"direccionDestino\": \"Av. Los Carrera 1234, Concepción\",\n  \"rutaId\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Obtener Envío por Venta",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8085/api/logistica/envios/venta/1", "protocol": "http", "host": ["localhost"], "port": "8085", "path": ["api", "logistica", "envios", "venta", "1"] }
+          }
+        },
+        {
+          "name": "Actualizar Estado del Envío",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8085/api/logistica/envios/1/estado", "protocol": "http", "host": ["localhost"], "port": "8085", "path": ["api", "logistica", "envios", "1", "estado"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"EN_RUTA\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Marcar Envío como Entregado",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8085/api/logistica/envios/1/estado", "protocol": "http", "host": ["localhost"], "port": "8085", "path": ["api", "logistica", "envios", "1", "estado"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"ENTREGADO\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-proveedores (8086)",
+      "item": [
+        {
+          "name": "Listar Proveedores",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8086/api/proveedores", "protocol": "http", "host": ["localhost"], "port": "8086", "path": ["api", "proveedores"] }
+          }
+        },
+        {
+          "name": "Registrar Proveedor",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8086/api/proveedores", "protocol": "http", "host": ["localhost"], "port": "8086", "path": ["api", "proveedores"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rut\": \"76543210-K\",\n  \"razonSocial\": \"Editorial Planeta S.A.\",\n  \"emailContacto\": \"contacto@planeta.cl\",\n  \"telefono\": \"+56225551234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Crear Orden de Compra",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8086/api/proveedores/ordenes", "protocol": "http", "host": ["localhost"], "port": "8086", "path": ["api", "proveedores", "ordenes"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"proveedorId\": 1,\n  \"detalles\": [\n    {\n      \"productoId\": 101,\n      \"cantidadSolicitada\": 50,\n      \"costoUnitario\": 7500.00\n    },\n    {\n      \"productoId\": 102,\n      \"cantidadSolicitada\": 30,\n      \"costoUnitario\": 12000.00\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "Recepcionar Orden de Compra",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8086/api/proveedores/ordenes/1/recepcion", "protocol": "http", "host": ["localhost"], "port": "8086", "path": ["api", "proveedores", "ordenes", "1", "recepcion"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-promociones (8087)",
+      "item": [
+        {
+          "name": "Listar Promociones",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8087/api/promociones", "protocol": "http", "host": ["localhost"], "port": "8087", "path": ["api", "promociones"] }
+          }
+        },
+        {
+          "name": "Crear Promoción",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8087/api/promociones", "protocol": "http", "host": ["localhost"], "port": "8087", "path": ["api", "promociones"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"PROMO20\",\n  \"porcentajeDescuento\": 20,\n  \"fechaInicio\": \"2026-05-01\",\n  \"fechaFin\": \"2026-06-30\",\n  \"estado\": \"ACTIVO\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Crear Cupón de Temporada",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8087/api/promociones", "protocol": "http", "host": ["localhost"], "port": "8087", "path": ["api", "promociones"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"codigo\": \"INVIERNO15\",\n  \"porcentajeDescuento\": 15,\n  \"fechaInicio\": \"2026-06-01\",\n  \"fechaFin\": \"2026-08-31\",\n  \"estado\": \"ACTIVO\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Validar Código de Cupón",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8087/api/promociones/validar/PROMO20", "protocol": "http", "host": ["localhost"], "port": "8087", "path": ["api", "promociones", "validar", "PROMO20"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-facturacion (8088)",
+      "item": [
+        {
+          "name": "Listar Documentos",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8088/api/facturacion", "protocol": "http", "host": ["localhost"], "port": "8088", "path": ["api", "facturacion"] }
+          }
+        },
+        {
+          "name": "Emitir Boleta",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8088/api/facturacion/emitir", "protocol": "http", "host": ["localhost"], "port": "8088", "path": ["api", "facturacion", "emitir"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"folioVenta\": \"FOLIO-001\",\n  \"rutCliente\": \"12345678-9\",\n  \"razonSocial\": null,\n  \"giro\": null,\n  \"tipoDocumento\": \"BOLETA\",\n  \"montoNeto\": 12990.00\n}"
+            }
+          }
+        },
+        {
+          "name": "Emitir Factura (Empresa)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8088/api/facturacion/emitir", "protocol": "http", "host": ["localhost"], "port": "8088", "path": ["api", "facturacion", "emitir"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"folioVenta\": \"FOLIO-002\",\n  \"rutCliente\": \"76543210-K\",\n  \"razonSocial\": \"Empresa ABC Ltda.\",\n  \"giro\": \"Comercio al por menor de libros\",\n  \"tipoDocumento\": \"FACTURA\",\n  \"montoNeto\": 45780.00\n}"
+            }
+          }
+        },
+        {
+          "name": "Obtener Documento por Folio de Venta",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8088/api/facturacion/venta/FOLIO-001", "protocol": "http", "host": ["localhost"], "port": "8088", "path": ["api", "facturacion", "venta", "FOLIO-001"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-bodega (8089)",
+      "item": [
+        {
+          "name": "Listar Ubicaciones Físicas",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8089/api/bodega/ubicaciones", "protocol": "http", "host": ["localhost"], "port": "8089", "path": ["api", "bodega", "ubicaciones"] }
+          }
+        },
+        {
+          "name": "Crear Ubicación Física",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8089/api/bodega/ubicaciones", "protocol": "http", "host": ["localhost"], "port": "8089", "path": ["api", "bodega", "ubicaciones"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pasillo\": \"D\",\n  \"estante\": \"04\",\n  \"nivel\": \"Alto\",\n  \"codigoBarras\": \"BOD-D04-A\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar Órdenes de Picking",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8089/api/bodega/picking", "protocol": "http", "host": ["localhost"], "port": "8089", "path": ["api", "bodega", "picking"] }
+          }
+        },
+        {
+          "name": "Crear Orden de Picking",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8089/api/bodega/picking", "protocol": "http", "host": ["localhost"], "port": "8089", "path": ["api", "bodega", "picking"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ventaId\": 1,\n  \"operarioAsignado\": \"Pedro Soto\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar Estado de Picking",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "http://localhost:8089/api/bodega/picking/1/estado?estado=EN_PROCESO",
+              "protocol": "http", "host": ["localhost"], "port": "8089",
+              "path": ["api", "bodega", "picking", "1", "estado"],
+              "query": [{ "key": "estado", "value": "EN_PROCESO" }]
+            }
+          }
+        },
+        {
+          "name": "Marcar Picking como Completado",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "http://localhost:8089/api/bodega/picking/1/estado?estado=COMPLETADO",
+              "protocol": "http", "host": ["localhost"], "port": "8089",
+              "path": ["api", "bodega", "picking", "1", "estado"],
+              "query": [{ "key": "estado", "value": "COMPLETADO" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ms-sucursales (8090)",
+      "item": [
+        {
+          "name": "Listar Sucursales",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8090/api/sucursales", "protocol": "http", "host": ["localhost"], "port": "8090", "path": ["api", "sucursales"] }
+          }
+        },
+        {
+          "name": "Ver Sucursal por ID",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8090/api/sucursales/1", "protocol": "http", "host": ["localhost"], "port": "8090", "path": ["api", "sucursales", "1"] }
+          }
+        },
+        {
+          "name": "Crear Sucursal",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8090/api/sucursales", "protocol": "http", "host": ["localhost"], "port": "8090", "path": ["api", "sucursales"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"BookPoint San Pedro\",\n  \"direccion\": \"Av. Jorge Alessandri 4567\",\n  \"comuna\": \"San Pedro de la Paz\",\n  \"region\": \"Biobío\",\n  \"telefono\": \"+56412223344\",\n  \"horarioAtencion\": \"Lun-Sáb 9:00-21:00\",\n  \"estadoOperativo\": \"ACTIVO\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Actualizar Sucursal",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8090/api/sucursales/1", "protocol": "http", "host": ["localhost"], "port": "8090", "path": ["api", "sucursales", "1"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"BookPoint Concepción Centro\",\n  \"direccion\": \"O'Higgins 650\",\n  \"comuna\": \"Concepción\",\n  \"region\": \"Biobío\",\n  \"telefono\": \"+56412334455\",\n  \"horarioAtencion\": \"Lun-Dom 9:00-22:00\",\n  \"estadoOperativo\": \"ACTIVO\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Flujo Completo - Venta Presencial",
+      "item": [
+        {
+          "name": "1. Ver Catálogo de Productos",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8084/api/catalogo/productos?page=0&size=10", "protocol": "http", "host": ["localhost"], "port": "8084", "path": ["api", "catalogo", "productos"], "query": [{"key": "page","value": "0"},{"key": "size","value": "10"}] }
+          }
+        },
+        {
+          "name": "2. Verificar Stock del Producto",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8082/api/inventario/check-stock?productoId=101&cantidad=1", "protocol": "http", "host": ["localhost"], "port": "8082", "path": ["api", "inventario", "check-stock"], "query": [{"key": "productoId","value": "101"},{"key": "cantidad","value": "1"}] }
+          }
+        },
+        {
+          "name": "3. Validar Cupón de Descuento",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:8087/api/promociones/validar/PROMO20", "protocol": "http", "host": ["localhost"], "port": "8087", "path": ["api", "promociones", "validar", "PROMO20"] }
+          }
+        },
+        {
+          "name": "4. Registrar Venta",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8081/api/ventas", "protocol": "http", "host": ["localhost"], "port": "8081", "path": ["api", "ventas"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipoVenta\": \"PRESENCIAL\",\n  \"clienteNombre\": \"Juan Pérez\",\n  \"clienteRut\": \"12345678-9\",\n  \"asistenteNombre\": \"María López\",\n  \"codigoDescuento\": \"PROMO20\",\n  \"detalles\": [\n    {\n      \"productoId\": 101,\n      \"productoNombre\": \"El Principito\",\n      \"cantidad\": 1,\n      \"precioUnitario\": 12990.00\n    }\n  ]\n}"
+            }
+          }
+        },
+        {
+          "name": "5. Crear Orden de Picking",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8089/api/bodega/picking", "protocol": "http", "host": ["localhost"], "port": "8089", "path": ["api", "bodega", "picking"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ventaId\": 1,\n  \"operarioAsignado\": \"Pedro Soto\"\n}"
+            }
+          }
+        },
+        {
+          "name": "6. Emitir Boleta",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:8088/api/facturacion/emitir", "protocol": "http", "host": ["localhost"], "port": "8088", "path": ["api", "facturacion", "emitir"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"folioVenta\": \"FOLIO-001\",\n  \"rutCliente\": \"12345678-9\",\n  \"razonSocial\": null,\n  \"giro\": null,\n  \"tipoDocumento\": \"BOLETA\",\n  \"montoNeto\": 10392.00\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
