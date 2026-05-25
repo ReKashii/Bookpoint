@@ -1,0 +1,39 @@
+[submodule "ms-ventas"]
+    path = ms-ventas
+    url = https://github.com/ReKashii/ms-ventas.git
+
+[submodule "ms-inventario"]
+    path = ms-inventario
+    url = https://github.com/ReKashii/ms-inventario.git
+
+[submodule "ms-usuarios"]
+    path = ms-usuarios
+    url = https://github.com/ReKashii/ms-usuarios.git
+
+[submodule "ms-catalogo"]
+    path = ms-catalogo
+    url = https://github.com/ReKashii/ms-catalogo.git
+
+[submodule "ms-logistica"]
+    path = ms-logistica
+    url = https://github.com/ReKashii/ms-logistica.git
+
+[submodule "ms-proveedores"]
+    path = ms-proveedores
+    url = https://github.com/ReKashii/ms-proveedores.git
+
+[submodule "ms-promociones"]
+    path = ms-promociones
+    url = https://github.com/ReKashii/ms-promociones.git
+
+[submodule "ms-facturacion"]
+    path = ms-facturacion
+    url = https://github.com/ReKashii/ms-facturacion.git
+
+[submodule "ms-bodega"]
+    path = ms-bodega
+    url = https://github.com/ReKashii/ms-bodega.git
+
+[submodule "ms-sucursales"]
+    path = ms-sucursales
+    url = https://github.com/ReKashii/ms-sucursales.git
